@@ -1,0 +1,3 @@
+<jboss-web>
+    <security-domain>java:/jaas/InscriptionRealm</security-domain>
+</jboss-web>

@@ -1,0 +1,7 @@
+<jboss-ejb-client xmlns="urn:jboss:ejb-client:2.1">
+    <client-context>
+        <remoting-connection-affinity>
+            <uri name="remote+http://localhost:8080" cluster-node="default" />
+        </remoting-connection-affinity>
+    </client-context>
+</jboss-ejb-client>
