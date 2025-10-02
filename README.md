@@ -53,30 +53,15 @@ Avant de pouvoir exécuter ce projet, assurez-vous d'avoir les éléments suivan
 
 ## Configuration de la Base de Données
 
-1.  **Créer la base de données :**
-    ```sql
-    CREATE DATABASE gestion_inscriptions;
+1.  **Créer la base de données et les tables :**
+    Le script SQL complet pour PostgreSQL se trouve dans `db/schema.sql`.
+    Vous pouvez l'exécuter via `psql` :
+    ```bash
+    psql -U your_username -f db/schema.sql
     ```
-2.  **Exécuter le script SQL :**
-    Le script de création des tables est inclus dans les spécifications du projet. Vous devrez l'exécuter manuellement sur votre base de données `gestion_inscriptions`.
-    ```sql
-    -- Exemple de script (à adapter si nécessaire)
-    CREATE TABLE utilisateurs (
-        id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-        username VARCHAR(50) UNIQUE NOT NULL,
-        password VARCHAR(255) NOT NULL,
-        email VARCHAR(100) NOT NULL,
-        role VARCHAR(50) NOT NULL,
-        nom VARCHAR(100),
-        prenom VARCHAR(100),
-        date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        actif BOOLEAN DEFAULT TRUE
-    );
-    -- ... autres tables (etudiants, filieres, candidatures)
-    ```
-    *Note :* Le type `ENUM` de MySQL n'est pas directement supporté par PostgreSQL. Il est recommandé d'utiliser `VARCHAR` pour les colonnes `role` et `statut` et de gérer la validation au niveau de l'application, ou de créer un type `ENUM` personnalisé dans PostgreSQL.
+    Assurez-vous de remplacer `your_username` par votre nom d'utilisateur PostgreSQL.
 
-3.  **Configurer la source de données (DataSource) dans WildFly :**
+2.  **Configurer la source de données (DataSource) dans WildFly :**
     Vous devrez configurer une source de données JNDI nommée `java:/jdbc/inscriptionDS` dans votre serveur WildFly, pointant vers votre base de données PostgreSQL. Voici un exemple de commande `jboss-cli` :
     ```bash
     /subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=org.postgresql,driver-class-name=org.postgresql.Driver)
